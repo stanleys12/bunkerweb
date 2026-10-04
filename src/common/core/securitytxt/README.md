@@ -6,7 +6,7 @@ The Security.txt plugin implements the [Security.txt](https://securitytxt.org/) 
 2. This file contains information about your security policies, contacts, and other relevant details.
 3. Security researchers and automated tools can easily find this file at the standard location.
 4. The content is configured using simple settings that allow you to specify contact information, encryption keys, policies, and acknowledgments.
-5. BunkerWeb automatically formats the file in accordance with RFC 9116.
+5. BunkerWeb automatically formats the file in accordance with RFC 9116, listing fields in alphabetical order while keeping the values of a repeated field (e.g. several contacts) in the order you configured them.
 
 ### How to Use
 
