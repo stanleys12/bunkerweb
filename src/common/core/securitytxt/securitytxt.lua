@@ -105,7 +105,23 @@ function securitytxt:init()
 				["csaf"] = {},
 			}
 		end
-		for var, value in pairs(vars) do
+		local sorted_vars = {}
+		for var, _ in pairs(vars) do
+			table.insert(sorted_vars, var)
+		end
+		-- Natural sort so SECURITYTXT_CONTACT, SECURITYTXT_CONTACT_1, ..., SECURITYTXT_CONTACT_10 keep their configured order
+		table.sort(sorted_vars, function(a, b)
+			local base_a, num_a = a:match("^(.-)_(%d+)$")
+			local base_b, num_b = b:match("^(.-)_(%d+)$")
+			base_a, num_a = base_a or a, tonumber(num_a) or 0
+			base_b, num_b = base_b or b, tonumber(num_b) or 0
+			if base_a ~= base_b then
+				return base_a < base_b
+			end
+			return num_a < num_b
+		end)
+		for _, var in ipairs(sorted_vars) do
+			local value = vars[var]
 			if value ~= "" then
 				key = string.lower(string.gsub(string.gsub(var, "^SECURITYTXT_", ""), "_%d+$", ""))
 				if key == "uri" or key == "expires" or key == "preferred_lang" then
